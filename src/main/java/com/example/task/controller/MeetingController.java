@@ -6,46 +6,46 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.task.model.Meeting;
-import com.example.task.repository.MeetingRepository;
+import com.example.task.service.MeetingService;
 
 @RestController
 @RequestMapping("/meeting")
 public class MeetingController {
     @Autowired
-    private MeetingRepository meetingRepo;
+    private MeetingService meetingService;
 
     @PostMapping("/add")
     public void addMeeting(@RequestBody Meeting meeting) {
-        meetingRepo.addMeeting(meeting);
+        meetingService.addMeeting(meeting);
     }
 
     @GetMapping("/all")
     public List<Meeting> getAllMeetings() {
-        return meetingRepo.findAll();
+        return meetingService.findAll();
     }
 
     @GetMapping("/find/{id}")
     public Meeting findMeeting(@PathVariable int id) {
-        return meetingRepo.findMeetingById(id);
+        return meetingService.findMeetingById(id);
     }
 
     @PutMapping("/update/{id}")
     public void updateMeeting(@RequestBody Meeting meeting, @PathVariable int id) {
-    	meetingRepo.updateMeeting(meeting, id);
+    	meetingService.updateMeeting(meeting, id);
 	}
 
     @DeleteMapping("/delete/{id}")
     public void removeMeeting(@PathVariable int id) {
-    	meetingRepo.deleteMeeting(id);
+    	meetingService.deleteMeeting(id);
 	}
 
     @GetMapping("/get/length")
     public int getMeetingsLength() {
-        return meetingRepo.getMeetingsLength();
+        return meetingService.getMeetingsLength();
     }
 
     @GetMapping("/get/index")
     public int getIndex() {
-        return meetingRepo.getIndex();
+        return meetingService.getCurrMeetingId();
     }
 }
