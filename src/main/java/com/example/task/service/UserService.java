@@ -13,6 +13,7 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     private int currUserId = 1;
+    private int isLogin = 0;
 
     public User addUser(User user){
         user.setId(this.currUserId);
@@ -38,5 +39,13 @@ public class UserService {
     public void deleteUser(int id){
         User currUser = userRepository.findById(id).orElse(null);
         userRepository.delete(currUser);
+    }
+
+    public int getIdLogin(){
+        return this.isLogin;
+    }
+
+    public void setIdLogin(int id){
+        this.isLogin = id;
     }
 }

@@ -3,8 +3,6 @@ package com.example.task.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,5 +39,15 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public void deleteUser(@PathVariable int id){
         userService.deleteUser(id);
+    }
+
+    @GetMapping("/getIdLogin")
+    public int getIdLogin() {
+        return userService.getIdLogin();
+    }
+
+    @GetMapping("/setIdLogin/{id}")
+    public void setIdLogin(@PathVariable int id) {
+        userService.setIdLogin(id);
     }
 }
