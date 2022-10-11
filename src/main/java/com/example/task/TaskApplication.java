@@ -1,7 +1,12 @@
 package com.example.task;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -9,8 +14,24 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.example.task.model.User;
+import com.example.task.repository.UserRepository;
+
 @SpringBootApplication
 public class TaskApplication {
+
+	@Autowired
+    private UserRepository userRepository;
+
+    @PostConstruct
+    public void initUsers() {
+        List<User> users = Stream.of(
+                new User(1, "user1", "$2a$12$qRe1Gt6J1AHaqS03WSAni.zdXnxCzcE2qVH1vCz1dEv.RekuZKAA2"),
+				new User(2, "user2", "$2a$12$B4NAFdgyQI3bFHe2qgsLHO3dSU3LNY5DCIjS0BX9S4QRkyVKnjeWe"),
+				new User(3, "user3", "$2a$12$1cEIDHra1DLcoDhoNIP09OCdQEb7WgvdfEXt/TRwa.yjoW3fvndKq")
+        ).collect(Collectors.toList());
+        userRepository.saveAll(users);
+    }
 
 	public static void main(String[] args) {
 		SpringApplication.run(TaskApplication.class, args);
