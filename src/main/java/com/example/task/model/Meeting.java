@@ -21,6 +21,7 @@ public class Meeting implements Serializable{
     private String date;
     private String title;
     private String desc;
+    private int creator;
 
     public void setMeetingId(int number) {
         this.id=number;

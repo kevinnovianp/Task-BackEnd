@@ -24,6 +24,11 @@ public class UserController {
         return userService.findUserById(id);
     }
 
+    @GetMapping("/getCreatorId")
+    public int getUserById(){
+        return userService.getCreatorId();
+    }
+
     @PostMapping("/add")
     public User addUser(@RequestBody User user){
         return userService.addUser(user);
@@ -37,15 +42,5 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public void deleteUser(@PathVariable int id){
         userService.deleteUser(id);
-    }
-
-    @GetMapping("/getIdLogin")
-    public int getIdLogin() {
-        return userService.getIdLogin();
-    }
-
-    @GetMapping("/setIdLogin/{id}")
-    public void setIdLogin(@PathVariable int id) {
-        userService.setIdLogin(id);
     }
 }

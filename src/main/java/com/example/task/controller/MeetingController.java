@@ -6,13 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.task.model.Meeting;
+import com.example.task.repository.UserRepository;
 import com.example.task.service.MeetingService;
+import com.example.task.service.UserService;
 
 @RestController
 @RequestMapping("/meeting")
 public class MeetingController {
     @Autowired
     private MeetingService meetingService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/add")
     public void addMeeting(@RequestBody Meeting meeting) {

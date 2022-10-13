@@ -27,7 +27,7 @@ public class MeetingService {
     public List<Meeting> findAll(){
         return meetings.opsForHash().values(HASH_KEY);
     }
-
+    
     public Meeting findMeetingById(int id){
         return (Meeting) meetings.opsForHash().get(HASH_KEY,id);
     }

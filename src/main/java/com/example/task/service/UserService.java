@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.task.config.SecurityConfig;
 import com.example.task.model.CustomUserDetail;
 import com.example.task.model.User;
 import com.example.task.repository.UserRepository;
@@ -16,12 +19,15 @@ import com.example.task.repository.UserRepository;
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+    private int creatorId = 0;
     private int currUserId = 3;
-    private int isLogin = 0;
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
     public User addUser(User user){
-        user.setId(this.currUserId);
         this.currUserId++;
+        user.setId(this.currUserId);
+        String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         return userRepository.save(user);
     }
 
@@ -45,12 +51,8 @@ public class UserService implements UserDetailsService {
         userRepository.delete(currUser);
     }
 
-    public int getIdLogin(){
-        return this.isLogin;
-    }
-
-    public void setIdLogin(int id){
-        this.isLogin = id;
+    public int getCreatorId(){
+        return this.creatorId;
     }
 
     @Override
@@ -59,6 +61,7 @@ public class UserService implements UserDetailsService {
         if(user == null){
             throw new UsernameNotFoundException("User not found!");
         }
+        this.creatorId = user.getId();
         return new CustomUserDetail(user);
         // return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
