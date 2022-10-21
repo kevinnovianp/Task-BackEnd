@@ -33,15 +33,15 @@ public class TaskApplication {
 	MeetingService meetingService;
 	private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-    // @PostConstruct
-    // public void initUsers() {
-    //     List<User> users = Stream.of(
-    //             new User(1, "user1", bCryptPasswordEncoder.encode("user1").toString()),
-	// 			new User(2, "user2", bCryptPasswordEncoder.encode("user2").toString()),
-	// 			new User(3, "user3", bCryptPasswordEncoder.encode("user3").toString())
-    //     ).collect(Collectors.toList());
-    //     userRepository.saveAll(users);
-    // }
+    @PostConstruct
+    public void initUsers() {
+        List<User> users = Stream.of(
+                new User(1, "user1", bCryptPasswordEncoder.encode("user1").toString()),
+				new User(2, "user2", bCryptPasswordEncoder.encode("user2").toString()),
+				new User(3, "user3", bCryptPasswordEncoder.encode("user3").toString())
+        ).collect(Collectors.toList());
+        userRepository.saveAll(users);
+    }
 
 	@PostConstruct
     public void initMeetings() {
